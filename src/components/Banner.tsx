@@ -8,10 +8,12 @@ export default function Banner() {
         alt="Banner image" 
         className="w-full h-full object-cover object-bottom" 
       />
-      <div className="absolute flex flex-col items-start left-0 p-2 text-white">
-        <div className="text-6xl uppercase font-semibold text-amber-950">New</div>
-        <div className="text-6xl uppercase font-semibold text-amber-950">Books</div>
-        <div className="text-6xl uppercase font-semibold text-amber-950">Everyday</div>
+      <div className="absolute w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-start p-2 text-white">
+          <div className="text-5xl uppercase font-semibold text-amber-950">New</div>
+          <div className="text-5xl uppercase font-semibold text-amber-950">Books</div>
+          <div className="text-5xl uppercase font-semibold text-amber-950">Everyday</div>
+        </div>
       </div>
     </div>
 
