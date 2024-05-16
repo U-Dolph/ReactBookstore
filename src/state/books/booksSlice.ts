@@ -17,23 +17,33 @@ interface Book {
 interface SearchResult {
   books: Book[];
   total: number;
-  page: number;
 }
 
 interface BooksState {
   newReleases: Book[];
   searchResults: SearchResult;
+  queryString: string;
+  currentPage: number;
 }
 
 const initialState: BooksState = {
   newReleases: JSON.parse(localStorage.getItem('newReleases') || '[]'),
   searchResults: JSON.parse(localStorage.getItem('searchResults') || '[]'),
+  queryString: '',
+  currentPage: 1
 };
 
 const booksSlice = createSlice({
   name: 'books',
   initialState,
-  reducers: {},
+  reducers: {
+    setPage(state, action: PayloadAction<number>) {
+      state.currentPage = action.payload;
+    },
+    setQuery(state, action: PayloadAction<string>) {
+      state.queryString = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchNewReleasesAsync.fulfilled, (state, action: PayloadAction<ResponseResult>) => {
@@ -47,7 +57,7 @@ const booksSlice = createSlice({
         if (action.payload.error != "0") {
           return;
         }
-        state.searchResults = action.payload;
+        state.searchResults = {...action.payload};
         localStorage.setItem('searchResults', JSON.stringify(action.payload));
       });
   },
@@ -70,4 +80,5 @@ export const fetchSearchResultsAsync = createAsyncThunk(
 );
 
 export default booksSlice.reducer;
+export const { setPage, setQuery } = booksSlice.actions;
 export type { Book };
