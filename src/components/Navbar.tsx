@@ -3,7 +3,7 @@ import star from '../assets/icons/star.svg'
 
 export default function Navbar() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center px-2 mt-2">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center mt-2">
       <div className="flex items-center text-5xl font-bold w-full justify-center sm:justify-start">
         Library
       </div>
