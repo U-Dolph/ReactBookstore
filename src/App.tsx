@@ -1,27 +1,13 @@
-import './App.css'
-import AccentDecorator from './components/AccentDecorator'
-import Banner from './components/Banner'
-import FindYourBooksWrapper from './components/FindYourBooksWrapper'
-import Header from './components/Header'
-import Navbar from './components/Navbar'
-import NewReleasesWrapper from './components/NewReleasesWrapper'
+
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
+import HomePage from './pages/HomePage';
+
+const router = createBrowserRouter(
+    createRoutesFromElements(<Route index element={<HomePage />} />)
+);
 
 function App() {
-  return (
-    <>
-      <AccentDecorator css="bg-orange-500">
-        <Header />
-      </AccentDecorator>
-      <Navbar />
-      <Banner />
-      <NewReleasesWrapper />
-      <div className="max-w-5xl mx-auto sm:px-6 lg:px-8 border my-8 border-gray-200"></div>
-      <FindYourBooksWrapper />
-      <AccentDecorator css="bg-orange-500 mt-8">
-        <div className='h-8'></div>
-      </AccentDecorator>
-    </>
-  )
+    return <RouterProvider router={router} />;
 }
 
 export default App
