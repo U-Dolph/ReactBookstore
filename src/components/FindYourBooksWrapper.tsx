@@ -56,7 +56,7 @@ export default function FindYourBooksWrapper() {
         { searchRes.books && searchRes.books.length > 0 && queryString == "" && <p>Your previous search result</p> } 
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-      { searchRes.books.length > 0 ? (
+      { searchRes.books ? (
           searchRes.books.map((book, id) => (
             <div className="flex-shrink-0 mr-2 sm:justify-center sm:flex">
               <Card key={id} data={book}/>
