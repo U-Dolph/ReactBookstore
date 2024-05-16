@@ -1,6 +1,6 @@
 import search from '../assets/icons/search.svg'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSearchResultsAsync, setPage, setQuery } from '../state/books/booksSlice';
+import { Book, fetchSearchResultsAsync, setPage, setQuery } from '../state/books/booksSlice';
 import { AppDispatch, RootState } from '../state/store';
 import Card from './Card';
 import Paginator from './Paginator';
@@ -46,12 +46,12 @@ export default function FindYourBooksWrapper() {
     dispatch(fetchSearchResultsAsync({ query: queryString, page: page }));
   }
 
-  const handleBookClick = (isbn: string) => {
+  const handleBookClick = (book: Book) => {
     if (!loggedIn) {
       alert("Please login to add to favorites");
       return;
     }
-    dispatch(addToLikedList(isbn));
+    dispatch(addToLikedList(book));
   }
 
   return (
@@ -69,8 +69,8 @@ export default function FindYourBooksWrapper() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {searchRes.books ? (
             searchRes.books.map((book) => (
-              <div className="flex-shrink-0 mr-2 sm:justify-center sm:flex hover:cursor-pointer" onClick={() => handleBookClick(book.isbn13)}>
-                <Card key={book.isbn13} details={book} liked={likedBooks.includes(book.isbn13) && loggedIn} />
+              <div className="flex-shrink-0 mr-2 sm:justify-center sm:flex hover:cursor-pointer" onClick={() => handleBookClick(book)}>
+                <Card key={book.isbn13} details={book} liked={likedBooks.some(likedBook => likedBook.isbn13 === book.isbn13) && loggedIn} />
               </div>
             ))
           ) : (

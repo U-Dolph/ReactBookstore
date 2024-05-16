@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar'
 import NewReleasesWrapper from '../components/NewReleasesWrapper'
 
 export default function HomePage() {
-    
     return (
         <>
             <AccentDecorator css="bg-orange-500">

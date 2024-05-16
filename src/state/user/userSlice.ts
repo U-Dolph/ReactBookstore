@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Book } from "../books/booksSlice";
 
 interface User {
     loggedIn: boolean;
-    likedBooks: string[];
+    likedBooks: Book[];
 }
 
 const initialState: User = {
@@ -22,13 +23,13 @@ const userSlice = createSlice({
             state.loggedIn = false;
             localStorage.setItem('loggedIn', JSON.stringify(false));
         },
-        addToLikedList(state, action: PayloadAction<string>) {
+        addToLikedList(state, action: PayloadAction<Book>) {
             if (!state.loggedIn) return;
-            if (state.likedBooks.includes(action.payload)) return;
+            if (state.likedBooks.some(likedBook => likedBook.isbn13 === action.payload.isbn13)) return;
             state.likedBooks.push(action.payload);
             localStorage.setItem('likedBooks', JSON.stringify(state.likedBooks));
         },
-        removeFromLikedList(state, action: PayloadAction<string>) {
+        removeFromLikedList(state, action: PayloadAction<Book>) {
             if (!state.loggedIn) return;
             state.likedBooks = state.likedBooks.filter(book => book !== action.payload);
             localStorage.setItem('likedBooks', JSON.stringify(state.likedBooks));
