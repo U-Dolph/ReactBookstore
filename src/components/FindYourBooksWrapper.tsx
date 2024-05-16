@@ -4,12 +4,14 @@ import { fetchSearchResultsAsync, setPage, setQuery } from '../state/books/books
 import { AppDispatch, RootState } from '../state/store';
 import Card from './Card';
 import Paginator from './Paginator';
+import { useState } from 'react';
 
 export default function FindYourBooksWrapper() {
   const searchRes = useSelector((state: RootState) => state.books.searchResults);
   const queryString = useSelector((state: RootState) => state.books.queryString);
   const currentPage = useSelector((state: RootState) => state.books.currentPage);
   const dispatch = useDispatch<AppDispatch>();
+  const [originalQuery, setOriginalQuery] = useState("");
   let timeout =  0;
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,13 +29,16 @@ export default function FindYourBooksWrapper() {
     //User input debounce
     if(timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
-      dispatch(setQuery(query))
+      setOriginalQuery(e.target.value);
+      document.title = e.target.value + " - Page " + currentPage;
+      dispatch(setQuery(query));
       dispatch(setPage(1));
       dispatch(fetchSearchResultsAsync({ query: query, page: 1 }));
     }, 300);
   }
 
   const handlePageChange = (page: number) => {
+    document.title = originalQuery + " - Page " + page;
     dispatch(setPage(page));
     dispatch(fetchSearchResultsAsync({ query: queryString, page: page }));
   }
@@ -48,10 +53,10 @@ export default function FindYourBooksWrapper() {
           <input type="text" className="border-2 rounded-md border-amber-950 pl-6 text-xl text-right" onChange={handleSearch}/>
         </div>
       </div>
-        { searchRes.books && queryString == "" && <p>Your previous search result</p> } 
+        { searchRes.books && searchRes.books.length > 0 && queryString == "" && <p>Your previous search result</p> } 
 
       <div className="grid grid-cols-5 gap-4">
-      {searchRes.books ? (
+      { searchRes.books.length > 0 ? (
           searchRes.books.map((book, id) => (
             <div className="flex-shrink-0 mr-2">
               <Card key={id} data={book}/>
@@ -61,8 +66,9 @@ export default function FindYourBooksWrapper() {
           <p>Start typing to search</p>
         )}
       </div>
+      { searchRes.books && searchRes.books.length == 0 && queryString != "" && <p>No result found for {originalQuery}</p> }
     </div>
-    { searchRes.books && queryString != "" && <Paginator page={currentPage} total={searchRes.total} setpage={handlePageChange}/> }
+    {  searchRes.books && searchRes.books.length > 0 && queryString != "" && <Paginator page={currentPage} total={searchRes.total} setpage={handlePageChange}/> }
     </>
   )
 }
