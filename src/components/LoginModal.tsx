@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { login } from "../state/user/userSlice";
+import { AppDispatch } from "../state/store";
 
 type Props = {
   show: boolean;
@@ -9,6 +12,8 @@ export default function LoginModal({ show, onClose }: Props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const dispatch = useDispatch<AppDispatch>();
   
   if (!show) {
     return null;
@@ -22,6 +27,8 @@ export default function LoginModal({ show, onClose }: Props) {
     }
 
     if (username === 'admin' && password === 'admin') {
+      setError('');
+      dispatch(login())
       onClose();
     } else {
       setError('Invalid username or password');
