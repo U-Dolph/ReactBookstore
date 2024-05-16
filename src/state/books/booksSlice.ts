@@ -3,6 +3,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 interface ResponseResult {
   error: string;
   total: number;
+  page: number;
   books: Book[];
 }
 
@@ -21,7 +22,7 @@ interface SearchResult {
 
 interface BooksState {
   newReleases: Book[];
-  searchResults: SearchResult[];
+  searchResults: SearchResult;
 }
 
 const initialState: BooksState = {
@@ -41,6 +42,13 @@ const booksSlice = createSlice({
         }
         state.newReleases = action.payload.books;
         localStorage.setItem('newReleases', JSON.stringify(action.payload.books));
+      })
+      .addCase(fetchSearchResultsAsync.fulfilled, (state, action: PayloadAction<ResponseResult>) => {
+        if (action.payload.error != "0") {
+          return;
+        }
+        state.searchResults = action.payload;
+        localStorage.setItem('searchResults', JSON.stringify(action.payload));
       });
   },
 });
@@ -49,6 +57,14 @@ export const fetchNewReleasesAsync = createAsyncThunk(
   "books/fetchNewReleasesAsync",
   async () => {
     const response = await fetch("https://api.itbook.store/1.0/new");
+    return response.json();
+  }
+);
+
+export const fetchSearchResultsAsync = createAsyncThunk(
+  "books/fetchSearchResultsAsync",
+  async ({ query, page }: { query: string, page: number }) => {
+    const response = await fetch(`https://api.itbook.store/1.0/search/${query}?page=${page}`);
     return response.json();
   }
 );

@@ -6,7 +6,7 @@ import instagram from '../assets/icons/instagram.svg';
 export default function Header() {
   return (
     <div className="bg-orange-500">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-row justify-end space-x-2 px-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-row justify-end space-x-2">
         <button className="p-1 flex flex-row items-center">
           {/* Does nothing */}
           <img src={instagram} className='w-4 text-white' alt="Instagram Button" />

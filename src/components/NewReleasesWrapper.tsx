@@ -6,7 +6,6 @@ import { AppDispatch, RootState } from '../state/store';
 
 export default function NewReleasesWrapper() {
   const newReleases = useSelector((state: RootState) => state.books.newReleases);
-  console.log(newReleases);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
