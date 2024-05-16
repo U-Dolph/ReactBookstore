@@ -1,9 +1,14 @@
 
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import HomePage from './pages/HomePage';
+import SharedLayout from './layouts/SharedLayout';
 
 const router = createBrowserRouter(
-    createRoutesFromElements(<Route index element={<HomePage />} />)
+    createRoutesFromElements(
+        <Route path='/' element={<SharedLayout />}>
+            <Route index element={<HomePage />} />
+        </Route>
+    )
 );
 
 function App() {
