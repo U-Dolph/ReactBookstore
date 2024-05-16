@@ -3,14 +3,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchNewReleasesAsync } from '../state/books/booksSlice';
 import Card from "./Card";
 import { AppDispatch, RootState } from '../state/store';
+import { addToLikedList } from '../state/user/userSlice';
 
 export default function NewReleasesWrapper() {
   const newReleases = useSelector((state: RootState) => state.books.newReleases);
+  const likedBooks = useSelector((state: RootState) => state.user.likedBooks);
+  const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchNewReleasesAsync());
   }, [dispatch]);
+
+  const handleBookClick = (isbn: string) => {
+    if (!loggedIn) {
+      alert("Please login to add to favorites");
+      return;
+    }
+    dispatch(addToLikedList(isbn));
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  mt-2">
@@ -18,9 +29,9 @@ export default function NewReleasesWrapper() {
 
       <div className="flex overflow-x-auto mt-4 gap-8">
         {newReleases && newReleases.length > 0 ? (
-          newReleases.map((book, id) => (
-            <div className="flex-shrink-0 mr-2">
-              <Card key={id} data={book}/>
+          newReleases.map((book) => (
+            <div className="flex-shrink-0 mr-2 hover:cursor-pointer" onClick={() => handleBookClick(book.isbn13)}>
+              <Card key={book.isbn13} details={book} liked={likedBooks.includes(book.isbn13) && loggedIn} />
             </div>
           ))
         ) : (

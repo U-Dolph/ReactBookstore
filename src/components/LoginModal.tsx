@@ -19,7 +19,7 @@ export default function LoginModal({ show, onClose }: Props) {
     return null;
   }
 
-  function fakeAuth(event: React.FormEvent<HTMLFormElement>) {
+  const fakeAuth =(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!username || !password) {
       setError('Username and password are required');

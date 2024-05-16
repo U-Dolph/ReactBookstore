@@ -10,7 +10,7 @@ export default function Navbar() {
   const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  function handleLogout() {
+  const handleLogout = () =>  {
     setDropdownOpen(false);
     dispatch(logout());
   }
