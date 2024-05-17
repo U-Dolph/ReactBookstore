@@ -3,11 +3,16 @@ import { AppDispatch, RootState } from '../state/store';
 import Card from '../components/Card';
 import { Book } from '../state/books/booksSlice';
 import { removeFromLikedList } from '../state/user/userSlice';
+import { useEffect } from 'react';
 
 export default function LikedPage() {
   const likedBooks = useSelector((state: RootState) => state.user.likedBooks);
   const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    document.title = "Your favourite books";
+  });
 
   const handleBookClick = (book: Book) => {
     dispatch(removeFromLikedList(book));

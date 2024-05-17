@@ -1,7 +1,12 @@
+import { useEffect } from 'react';
 import FindYourBooksWrapper from '../components/FindYourBooksWrapper'
 import NewReleasesWrapper from '../components/NewReleasesWrapper'
 
 export default function HomePage() {
+  useEffect(() => {
+    document.title = "Bookstore";
+  });
+
   return (
     <>
       <NewReleasesWrapper />
