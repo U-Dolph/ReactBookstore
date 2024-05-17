@@ -5,15 +5,18 @@ import { AppDispatch, RootState } from '../state/store';
 import { useState } from 'react';
 import { logout } from '../state/user/userSlice';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
   const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setDropdownOpen(false);
     dispatch(logout());
+    navigate('/') ;
   }
 
   return (
