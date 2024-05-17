@@ -1,3 +1,5 @@
+import { REQUESTED_PAGE_SIZE } from "../globals";
+
 type Props = {
   total: number;
   page: number;
@@ -5,9 +7,7 @@ type Props = {
 }
 
 export default function Paginator({ total, page, setpage }: Props) {
-  const PAGE_SIZE = 10;
-
-  const totalPages = Math.ceil(total / PAGE_SIZE);
+  const totalPages = Math.ceil(total / REQUESTED_PAGE_SIZE);
 
   return (
     <div className="mt-8 flex justify-center text-2xl">

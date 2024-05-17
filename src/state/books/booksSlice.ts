@@ -1,4 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { API_PAGE_SIZE, REQUESTED_PAGE_SIZE } from "../../globals";
 
 interface ResponseResult {
   error: string;
@@ -75,10 +76,39 @@ export const fetchNewReleasesAsync = createAsyncThunk(
 export const fetchSearchResultsAsync = createAsyncThunk(
   "books/fetchSearchResultsAsync",
   async ({ query, page }: { query: string, page: number }) => {
-    const response = await fetch(`https://api.itbook.store/1.0/search/${query}?page=${page}`);
-    return response.json();
+    return await fetchBooks(query, page);
   }
 );
+
+const fetchBooks = async (query: string, page: number) => {
+  const books = [];
+  let errorCode = "0";
+  let total = 0;
+  const startPage = Math.floor((page - 1) * REQUESTED_PAGE_SIZE / API_PAGE_SIZE + 1);
+  const endPage = Math.ceil(page * REQUESTED_PAGE_SIZE / API_PAGE_SIZE);
+
+  for (let i = startPage; i <= endPage; i++) {
+    const response = await fetch(`https://api.itbook.store/1.0/search/${query}?page=${i}`);
+    const data = await response.json();
+    books.push(...data.books);
+
+    if (data.error != "0")
+      errorCode = data.error;
+    
+    if (total === 0)
+      total = data.total;
+  }
+
+  const startIndex = ((page - 1) * REQUESTED_PAGE_SIZE) % API_PAGE_SIZE;
+  const resultBooks = books.slice(startIndex, startIndex + REQUESTED_PAGE_SIZE);
+
+  return {
+    error: errorCode,
+    total: total,
+    page: page,
+    books: resultBooks
+  } as ResponseResult;
+};
 
 export default booksSlice.reducer;
 export const { setPage, setQuery } = booksSlice.actions;
