@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../state/store';
 import { useState } from 'react';
 import { logout } from '../state/user/userSlice';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,7 +19,7 @@ export default function Navbar() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center mt-2">
       <div className="flex items-center text-5xl font-bold w-full justify-center sm:justify-start">
-        Library
+        <Link to="/">Library</Link>
       </div>
 
       <div className="flex justify-center flex-1 font-semibold">
@@ -33,9 +34,9 @@ export default function Navbar() {
       </div>
       <div className='flex space-x-2 justify-center sm:justify-end w-full'>
         {loggedIn && <>
-          <button>
+          <Link to="/favourites">
             <img src={star} alt="Wishlist Button" className='h-6' />
-          </button>
+          </Link>
           <div className="relative flex items-center justify-center">
             <button onClick={() => setDropdownOpen(!dropdownOpen)}>
               <img src={profile} alt="Profile Button" className='h-6' />

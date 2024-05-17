@@ -69,7 +69,7 @@ export default function FindYourBooksWrapper() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {searchRes.books ? (
             searchRes.books.map((book) => (
-              <div className="flex-shrink-0 mr-2 sm:justify-center sm:flex hover:cursor-pointer" onClick={() => handleBookClick(book)}>
+              <div className="flex-shrink-0 mr-2 justify-center flex hover:cursor-pointer" onClick={() => handleBookClick(book)}>
                 <Card key={book.isbn13} details={book} liked={likedBooks.some(likedBook => likedBook.isbn13 === book.isbn13) && loggedIn} />
               </div>
             ))

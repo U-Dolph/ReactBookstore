@@ -31,7 +31,7 @@ const userSlice = createSlice({
         },
         removeFromLikedList(state, action: PayloadAction<Book>) {
             if (!state.loggedIn) return;
-            state.likedBooks = state.likedBooks.filter(book => book !== action.payload);
+            state.likedBooks = state.likedBooks.filter(likedBook => likedBook.isbn13 !== action.payload.isbn13);
             localStorage.setItem('likedBooks', JSON.stringify(state.likedBooks));
         }
     }

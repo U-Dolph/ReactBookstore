@@ -6,17 +6,19 @@ import Navbar from '../components/Navbar'
 
 export default function SharedLayout() {
   return (
-    <>
-      <AccentDecorator css="bg-orange-500">
-        <Header />
-      </AccentDecorator>
-      <Navbar />
-      <Banner />
-      <Outlet />
+<div className="flex flex-col min-h-screen justify-between">
+      <div>
+        <AccentDecorator css="bg-orange-500">
+          <Header />
+        </AccentDecorator>
+        <Navbar />
+        <Banner />
+        <Outlet />
+      </div>
 
       <AccentDecorator css="bg-orange-500 mt-8">
         <div className='h-8'></div>
       </AccentDecorator>
-    </>
+    </div>
   );
 }
