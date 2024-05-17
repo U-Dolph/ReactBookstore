@@ -11,7 +11,7 @@ export default function Navbar() {
   const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleLogout = () =>  {
+  const handleLogout = () => {
     setDropdownOpen(false);
     dispatch(logout());
   }
@@ -43,10 +43,10 @@ export default function Navbar() {
             </button>
             {dropdownOpen && (
               <div className="absolute top-8 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-50">
-              <div className="py-1">
-                <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={handleLogout}>Logout</button>
+                <div className="py-1">
+                  <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={handleLogout}>Logout</button>
+                </div>
               </div>
-            </div>
             )}
           </div>
         </>

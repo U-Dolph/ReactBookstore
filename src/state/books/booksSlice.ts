@@ -58,7 +58,7 @@ const booksSlice = createSlice({
         if (action.payload.error != "0") {
           return;
         }
-        state.searchResults = {...action.payload};
+        state.searchResults = { ...action.payload };
         localStorage.setItem('searchResults', JSON.stringify(action.payload));
       });
   },

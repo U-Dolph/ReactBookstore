@@ -1,7 +1,7 @@
 type Props = {
-    total: number;
-    page: number;
-    setpage: (page: number) => void;
+  total: number;
+  page: number;
+  setpage: (page: number) => void;
 }
 
 export default function Paginator({ total, page, setpage }: Props) {
